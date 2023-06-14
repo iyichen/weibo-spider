@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .weibo {
+            max-width: 600px;
+            /*border: 1px solid red;*/
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            background: #ffffff;
+        }
+        .outer {
+            border-left: 1px solid #777777;
+            border-right: 1px solid #777777;
+            border-bottom: 1px solid #777777;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .time {
+            color: #777777;
+            font-size: 14px;
+            padding: 10px 0;
+        }
+
+        .content {
+            margin: 5px 0;
+        }
+
+        .img-thumbnail {
+            width: 100%;
+        }
+
+        .retweet {
+            max-width: 580px;
+            background: #eeeeee;
+        }
+    </style>
+</head>
+<body>
+{{range .}}
+<div class="weibo outer">
+    <div>
+        <span class="username">{{.Name}}</span>
+        <span class="time">(发布于{{.Time}})</span>
+    </div>
+    <div class="content">
+        {{.Content}}
+    </div>
+    <div class="row">
+        {{range .Images}}
+        {{if ne .Html ""}}
+        <img src="{{.Html}}" class="img-thumbnail" alt="">
+        {{end}}
+        {{end}}
+    </div>
+
+    {{if .Retweet}}
+    <div class="weibo retweet">
+        <div>
+            <span class="username">{{.Retweet.Name}}</span>
+            <span class="time">(发布于{{.Retweet.Time}})</span>
+        </div>
+        <div class="content">
+            {{.Retweet.Content}}
+        </div>
+        <div class="row">
+            {{range .Retweet.Images}}
+            {{if ne .Html ""}}
+            <img src="{{.Html}}" class="img-thumbnail" alt="">
+            {{end}}
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+</div>
+{{end}}
+</body>
+</html>
